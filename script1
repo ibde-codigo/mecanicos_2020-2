@@ -1,0 +1,59 @@
+/*
+Nombre: Marcos Sandoval Salazar
+Asignatura:
+Semestre:
+Título: Scrip 1 Mecanicos
+*/
+
+--Sección de crear tablas
+
+CREATE TABLE "auto" (
+"Num_ser" varchar(18) NOT NULL,
+"marca" varchar(20),
+"modelo" varchar(20),
+"fabricacion" int,
+"Color" varchar(20),
+"propietario" varchar(18),
+PRIMARY KEY ("Num_ser") 
+);
+
+CREATE TABLE "servicio" (
+"id" serial NOT NULL,
+"auto_id" varchar(18),
+"Mecanico_id" int,
+PRIMARY KEY ("id") 
+);
+
+CREATE TABLE "mecanico" (
+"id_mecanico" serial NOT NULL,
+"nombre" varchar(5),
+"Apat" int,
+"amat" varchar(20),
+"rol" varchar(255) NOT NULL,
+PRIMARY KEY ("id_mecanico") 
+);
+
+CREATE TABLE "catalogo" (
+"id" serial NOT NULL,
+"actividad" varchar(30),
+PRIMARY KEY ("id") 
+);
+
+CREATE TABLE "propietario" (
+"curp" varchar(18) NOT NULL,
+"nombre" varchar(20) NOT NULL,
+"apat" varchar(20) NOT NULL,
+"amat" varchar NOT NULL,
+"estatura" float4,
+"edad" int,
+"telefono" varchar(15),
+"fec_nac" date NOT NULL,
+PRIMARY KEY ("curp") 
+);
+
+--Sección de FK
+
+ALTER TABLE "auto" ADD CONSTRAINT "fk_auto_propietario" FOREIGN KEY ("propietario") REFERENCES "propietario" ("curp") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "mecanico" ADD CONSTRAINT "fk_catalogo_mecanico" FOREIGN KEY ("rol") REFERENCES "catalogo" ("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "servicio" ADD CONSTRAINT "fk_auto_serv" FOREIGN KEY ("auto_id") REFERENCES "auto" ("Num_ser") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "servicio" ADD CONSTRAINT "fk_mec_serv" FOREIGN KEY ("Mecanico_id") REFERENCES "mecanico" ("id_mecanico") ON DELETE RESTRICT ON UPDATE RESTRICT;
